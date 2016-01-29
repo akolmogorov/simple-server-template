@@ -1,10 +1,10 @@
 #encoding: utf-8
 
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 from simple_server.token_auth import TokenAuth
 
-__author__ = 'deon'
+__author__ = 'peon & begua'
 
 import unittest
 
@@ -24,7 +24,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_token_generation(self):
         principal = "test@user.org"
-        expiration_date = date.today()
+        expiration_date = datetime.now()
         ip_addr = "127.0.0.1"
         salt = 1234
         secret = "unpassword"
@@ -37,10 +37,9 @@ class TestStringMethods(unittest.TestCase):
         # Vamos a probar que generate_token() genera una token que puede parsear
         # el método from_token(token), si efectivamente ambos métodos funcionan,
         # origina_token_auth y parsed_from_original_token deberían ser iguales
-
         self.assertEqual(original_token_auth, parsed_from_original_token,
-                         "el objeto generado por from_token(token) debería ser igual "
-                         "al objeto original que generó la token")
+                          "el objeto generado por from_token(token) debería ser igual "
+                          "al objeto original que generó la token")
 
 
 if __name__ == '__main__':

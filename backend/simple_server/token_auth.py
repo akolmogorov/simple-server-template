@@ -1,4 +1,6 @@
-import datetime
+import json
+
+from dateutil import parser
 
 __author__ = 'deon'
 
@@ -14,8 +16,9 @@ class TokenAuth:
         self.secret = secret
 
     def generate_token(self):
-        # todo esto es un mock
-        return "mocktoken"
+        return json.dumps(
+            {"principal": self.principal, "expiration_date": self.expiration_date.isoformat(), "ip_addr": self.ip_addr,
+             "salt": self.salt, "secret": self.secret}, sort_keys=True)
 
     def __eq__(self, other):
         return (isinstance(other, self.__class__)
@@ -26,12 +29,12 @@ class TokenAuth:
 
     @classmethod
     def from_token(cls, token):
-        # todo esto es un mock
+        j = json.loads(token)
 
-        principal = "mock@mock.org"
-        expiration_date = datetime.date.today()
-        ip_addr = "127.0.0.1"
-        salt = 8234
-        secret = "unpassword"
+        principal = j["principal"]
+        expiration_date = parser.parse(j["expiration_date"])
+        ip_addr = j["ip_addr"]
+        salt = j["salt"]
+        secret = j["secret"]
 
         return cls(principal, expiration_date, ip_addr, salt, secret)
