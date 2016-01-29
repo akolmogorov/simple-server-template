@@ -18,7 +18,7 @@ class TokenAuth:
     def generate_token(self):
         return json.dumps(
             {"principal": self.principal, "expiration_date": self.expiration_date.isoformat(), "ip_addr": self.ip_addr,
-             "salt": self.salt, "secret": self.secret}, sort_keys=True)
+             "salt": self.salt, "secret": self.secret})
 
     def __eq__(self, other):
         return (isinstance(other, self.__class__)
